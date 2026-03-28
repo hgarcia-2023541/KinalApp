@@ -1,9 +1,11 @@
 package com.herbertgarcia.kinalapp.service;
 
 import com.herbertgarcia.kinalapp.entity.Venta;
+import com.herbertgarcia.kinalapp.repository.DetalleVentaRepository;
 import com.herbertgarcia.kinalapp.repository.VentaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,9 +14,11 @@ import java.util.Optional;
 public class VentaService implements IVentaService {
 
     private final VentaRepository ventaRepository;
+    private final DetalleVentaRepository detalleVentaRepository;
 
-    public VentaService(VentaRepository ventaRepository) {
+    public VentaService(VentaRepository ventaRepository, DetalleVentaRepository detalleVentaRepository) {
         this.ventaRepository = ventaRepository;
+        this.detalleVentaRepository = detalleVentaRepository;
     }
 
     @Override
@@ -29,6 +33,7 @@ public class VentaService implements IVentaService {
         if (venta.getEstado() == null || venta.getEstado() == 0) {
             venta.setEstado(1L);
         }
+        venta.setTotal(new BigDecimal("0.00"));
         return ventaRepository.save(venta);
     }
 
@@ -45,6 +50,12 @@ public class VentaService implements IVentaService {
         }
         venta.setCodigoVenta(id);
         validarVenta(venta);
+        BigDecimal total = detalleVentaRepository
+                .findByVenta_CodigoVenta(id)
+                .stream()
+                .map(d -> d.getSubtotal() != null ? d.getSubtotal() : new BigDecimal("0.00"))
+                .reduce(new BigDecimal("0.00"), BigDecimal::add);
+        venta.setTotal(total);
         return ventaRepository.save(venta);
     }
 
@@ -71,9 +82,6 @@ public class VentaService implements IVentaService {
     private void validarVenta(Venta venta) {
         if (venta.getFechaVenta() == null) {
             throw new IllegalArgumentException("La fecha de venta es obligatoria");
-        }
-        if (venta.getTotal() == null) {
-            throw new IllegalArgumentException("El total es obligatorio");
         }
         if (venta.getCliente() == null) {
             throw new IllegalArgumentException("El cliente es obligatorio");
