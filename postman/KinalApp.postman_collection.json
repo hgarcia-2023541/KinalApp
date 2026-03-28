@@ -1,0 +1,70 @@
+{
+	"info": {
+		"name": "KinalApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{"key": "username", "value": "admin", "type": "string"},
+			{"key": "password", "value": "admin123", "type": "string"}
+		]
+	},
+	"item": [
+		{
+			"name": "Clientes",
+			"item": [
+				{"name": "GET Listar Clientes","request": {"method": "GET","header": [],"url": {"raw": "http://localhost:8081/clientes","host": ["localhost"],"port": "8081","path": ["clientes"]}}},
+				{"name": "GET Cliente por DPI","request": {"method": "GET","header": [],"url": {"raw": "http://localhost:8081/clientes/1234567890101","host": ["localhost"],"port": "8081","path": ["clientes","1234567890101"]}}},
+				{"name": "GET Clientes Activos","request": {"method": "GET","header": [],"url": {"raw": "http://localhost:8081/clientes/activos","host": ["localhost"],"port": "8081","path": ["clientes","activos"]}}},
+				{"name": "POST Crear Cliente","request": {"method": "POST","header": [{"key": "Content-Type","value": "application/json"}],"body": {"mode": "raw","raw": "{\n    \"DPICliente\": \"1234567890101\",\n    \"nombreCliente\": \"Juan Pérez\",\n    \"apellidoCliente\": \"García\",\n    \"direccion\": \"Ciudad de Guatemala\",\n    \"estado\": 1\n}"},"url": {"raw": "http://localhost:8081/clientes","host": ["localhost"],"port": "8081","path": ["clientes"]}}},
+				{"name": "PUT Actualizar Cliente","request": {"method": "PUT","header": [{"key": "Content-Type","value": "application/json"}],"body": {"mode": "raw","raw": "{\n    \"DPICliente\": \"1234567890101\",\n    \"nombreCliente\": \"Juan Carlos\",\n    \"apellidoCliente\": \"García\",\n    \"direccion\": \"Mixco, Guatemala\",\n    \"estado\": 1\n}"},"url": {"raw": "http://localhost:8081/clientes/1234567890101","host": ["localhost"],"port": "8081","path": ["clientes","1234567890101"]}}},
+				{"name": "DELETE Eliminar Cliente","request": {"method": "DELETE","header": [],"url": {"raw": "http://localhost:8081/clientes/1234567890101","host": ["localhost"],"port": "8081","path": ["clientes","1234567890101"]}}}
+			]
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{"name": "GET Listar Usuarios","request": {"method": "GET","header": [],"url": {"raw": "http://localhost:8081/usuarios","host": ["localhost"],"port": "8081","path": ["usuarios"]}}},
+				{"name": "GET Usuario por ID","request": {"method": "GET","header": [],"url": {"raw": "http://localhost:8081/usuarios/1","host": ["localhost"],"port": "8081","path": ["usuarios","1"]}}},
+				{"name": "GET Usuarios Activos","request": {"method": "GET","header": [],"url": {"raw": "http://localhost:8081/usuarios/activos","host": ["localhost"],"port": "8081","path": ["usuarios","activos"]}}},
+				{"name": "POST Crear Usuario","request": {"method": "POST","header": [{"key": "Content-Type","value": "application/json"}],"body": {"mode": "raw","raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin123\",\n    \"email\": \"admin@kinal.edu.gt\",\n    \"rol\": \"ADMIN\",\n    \"estado\": 1\n}"},"url": {"raw": "http://localhost:8081/usuarios","host": ["localhost"],"port": "8081","path": ["usuarios"]}}},
+				{"name": "PUT Actualizar Usuario","request": {"method": "PUT","header": [{"key": "Content-Type","value": "application/json"}],"body": {"mode": "raw","raw": "{\n    \"username\": \"admin2\",\n    \"password\": \"admin123\",\n    \"email\": \"admin2@kinal.edu.gt\",\n    \"rol\": \"ADMIN\",\n    \"estado\": 1\n}"},"url": {"raw": "http://localhost:8081/usuarios/1","host": ["localhost"],"port": "8081","path": ["usuarios","1"]}}},
+				{"name": "DELETE Eliminar Usuario","request": {"method": "DELETE","header": [],"url": {"raw": "http://localhost:8081/usuarios/1","host": ["localhost"],"port": "8081","path": ["usuarios","1"]}}}
+			]
+		},
+		{
+			"name": "Productos",
+			"item": [
+				{"name": "GET Listar Productos","request": {"method": "GET","header": [],"url": {"raw": "http://localhost:8081/productos","host": ["localhost"],"port": "8081","path": ["productos"]}}},
+				{"name": "GET Producto por ID","request": {"method": "GET","header": [],"url": {"raw": "http://localhost:8081/productos/1","host": ["localhost"],"port": "8081","path": ["productos","1"]}}},
+				{"name": "GET Productos Activos","request": {"method": "GET","header": [],"url": {"raw": "http://localhost:8081/productos/activos","host": ["localhost"],"port": "8081","path": ["productos","activos"]}}},
+				{"name": "POST Crear Producto","request": {"method": "POST","header": [{"key": "Content-Type","value": "application/json"}],"body": {"mode": "raw","raw": "{\n    \"nombreProducto\": \"Laptop\",\n    \"precio\": 5000.00,\n    \"stock\": 10,\n    \"estado\": 1\n}"},"url": {"raw": "http://localhost:8081/productos","host": ["localhost"],"port": "8081","path": ["productos"]}}},
+				{"name": "PUT Actualizar Producto","request": {"method": "PUT","header": [{"key": "Content-Type","value": "application/json"}],"body": {"mode": "raw","raw": "{\n    \"nombreProducto\": \"Laptop Gamer\",\n    \"precio\": 6000.00,\n    \"stock\": 8,\n    \"estado\": 1\n}"},"url": {"raw": "http://localhost:8081/productos/1","host": ["localhost"],"port": "8081","path": ["productos","1"]}}},
+				{"name": "DELETE Eliminar Producto","request": {"method": "DELETE","header": [],"url": {"raw": "http://localhost:8081/productos/1","host": ["localhost"],"port": "8081","path": ["productos","1"]}}}
+			]
+		},
+		{
+			"name": "Ventas",
+			"item": [
+				{"name": "GET Listar Ventas","request": {"method": "GET","header": [],"url": {"raw": "http://localhost:8081/ventas","host": ["localhost"],"port": "8081","path": ["ventas"]}}},
+				{"name": "GET Venta por ID","request": {"method": "GET","header": [],"url": {"raw": "http://localhost:8081/ventas/1","host": ["localhost"],"port": "8081","path": ["ventas","1"]}}},
+				{"name": "GET Ventas Activas","request": {"method": "GET","header": [],"url": {"raw": "http://localhost:8081/ventas/activos","host": ["localhost"],"port": "8081","path": ["ventas","activos"]}}},
+				{"name": "POST Crear Venta","request": {"method": "POST","header": [{"key": "Content-Type","value": "application/json"}],"body": {"mode": "raw","raw": "{\n    \"fechaVenta\": \"2026-03-27\",\n    \"estado\": 1,\n    \"cliente\": {\"DPICliente\": \"1234567890101\"},\n    \"usuario\": {\"codigoUsuario\": 1}\n}"},"url": {"raw": "http://localhost:8081/ventas","host": ["localhost"],"port": "8081","path": ["ventas"]}}},
+				{"name": "PUT Actualizar Venta","request": {"method": "PUT","header": [{"key": "Content-Type","value": "application/json"}],"body": {"mode": "raw","raw": "{\n    \"fechaVenta\": \"2026-03-27\",\n    \"estado\": 1,\n    \"cliente\": {\"DPICliente\": \"1234567890101\"},\n    \"usuario\": {\"codigoUsuario\": 1}\n}"},"url": {"raw": "http://localhost:8081/ventas/1","host": ["localhost"],"port": "8081","path": ["ventas","1"]}}},
+				{"name": "DELETE Eliminar Venta","request": {"method": "DELETE","header": [],"url": {"raw": "http://localhost:8081/ventas/1","host": ["localhost"],"port": "8081","path": ["ventas","1"]}}}
+			]
+		},
+		{
+			"name": "DetalleVenta",
+			"item": [
+				{"name": "GET Listar DetalleVentas","request": {"method": "GET","header": [],"url": {"raw": "http://localhost:8081/detalle-venta","host": ["localhost"],"port": "8081","path": ["detalle-venta"]}}},
+				{"name": "GET DetalleVenta por ID","request": {"method": "GET","header": [],"url": {"raw": "http://localhost:8081/detalle-venta/1","host": ["localhost"],"port": "8081","path": ["detalle-venta","1"]}}},
+				{"name": "GET DetalleVenta por Venta","request": {"method": "GET","header": [],"url": {"raw": "http://localhost:8081/detalle-venta/venta/1","host": ["localhost"],"port": "8081","path": ["detalle-venta","venta","1"]}}},
+				{"name": "POST Crear DetalleVenta","request": {"method": "POST","header": [{"key": "Content-Type","value": "application/json"}],"body": {"mode": "raw","raw": "{\n    \"cantidad\": 2,\n    \"precioUnitario\": 5000.00,\n    \"venta\": {\"codigoVenta\": 1},\n    \"producto\": {\"codigoProducto\": 1}\n}"},"url": {"raw": "http://localhost:8081/detalle-venta","host": ["localhost"],"port": "8081","path": ["detalle-venta"]}}},
+				{"name": "PUT Actualizar DetalleVenta","request": {"method": "PUT","header": [{"key": "Content-Type","value": "application/json"}],"body": {"mode": "raw","raw": "{\n    \"cantidad\": 3,\n    \"precioUnitario\": 5000.00,\n    \"venta\": {\"codigoVenta\": 1},\n    \"producto\": {\"codigoProducto\": 1}\n}"},"url": {"raw": "http://localhost:8081/detalle-venta/1","host": ["localhost"],"port": "8081","path": ["detalle-venta","1"]}}},
+				{"name": "DELETE Eliminar DetalleVenta","request": {"method": "DELETE","header": [],"url": {"raw": "http://localhost:8081/detalle-venta/1","host": ["localhost"],"port": "8081","path": ["detalle-venta","1"]}}}
+			]
+		}
+	]
+}
