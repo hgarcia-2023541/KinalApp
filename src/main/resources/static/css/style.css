@@ -1,0 +1,244 @@
+/* ============================================
+   KinalApp - Estilo Naturaleza
+   Colores: verdes, tierra, beige, madera
+   ============================================ */
+
+:root {
+    --verde-profundo: #2D6A4F;
+    --verde-musgo: #40916C;
+    --verde-claro: #52B788;
+    --beige: #F5E7D9;
+    --crema: #FFF8ED;
+    --tierra: #7F4F24;
+    --tierra-claro: #936639;
+    --madera: #B08968;
+    --sombra: rgba(0,0,0,0.05);
+    --sombra-fuerte: rgba(0,0,0,0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--beige);
+    min-height: 100vh;
+}
+
+/* ===== FONDO DE NATURALEZA ===== */
+.bg-nature {
+    background: linear-gradient(135deg, var(--verde-profundo) 0%, var(--verde-musgo) 100%);
+    min-height: 100vh;
+}
+
+/* ===== NAVBAR ===== */
+.navbar-nature {
+    background: linear-gradient(135deg, var(--verde-profundo), var(--verde-musgo));
+    padding: 1rem 0;
+    box-shadow: 0 4px 12px var(--sombra-fuerte);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar-nature .navbar-brand {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.navbar-nature .navbar-brand:hover {
+    color: var(--beige);
+}
+
+/* ===== BOTONES ===== */
+.btn-nature {
+    background: linear-gradient(135deg, var(--verde-profundo), var(--verde-musgo));
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-nature:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(45,106,79,0.4);
+    color: white;
+    background: linear-gradient(135deg, var(--verde-musgo), var(--verde-profundo));
+}
+
+.btn-nature-outline {
+    background: transparent;
+    border: 1.5px solid white;
+    color: white;
+    border-radius: 30px;
+    padding: 0.4rem 1.2rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.btn-nature-outline:hover {
+    background: white;
+    color: var(--verde-profundo);
+    transform: translateY(-1px);
+}
+
+/* ===== TARJETAS ===== */
+.card-nature {
+    background: var(--crema);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 8px 24px var(--sombra);
+    border: 1px solid rgba(201,169,110,0.3);
+}
+
+.welcome-card {
+    background: linear-gradient(135deg, var(--crema), var(--beige));
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 1rem;
+    border-left: 5px solid var(--verde-profundo);
+    box-shadow: 0 4px 12px var(--sombra);
+}
+
+.welcome-card h1 {
+    color: var(--verde-profundo);
+    font-size: 1.8rem;
+}
+
+/* ===== TARJETAS DE MENÚ ===== */
+.menu-card {
+    background: var(--crema);
+    border-radius: 20px;
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px var(--sombra);
+}
+
+.menu-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 28px var(--sombra-fuerte);
+    background: white;
+}
+
+.menu-card i {
+    color: var(--verde-musgo);
+    margin-bottom: 0.8rem;
+}
+
+.menu-card h4 {
+    color: var(--verde-profundo);
+    margin-bottom: 0.5rem;
+}
+
+.menu-card p {
+    color: var(--tierra);
+    font-size: 0.9rem;
+}
+
+/* ===== TABLAS ===== */
+.table-nature {
+    background: var(--verde-profundo);
+    color: white;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(82,183,136,0.1);
+}
+
+.table {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px var(--sombra);
+}
+
+/* ===== FORMULARIOS ===== */
+.form-control, .form-select {
+    border-radius: 12px;
+    border: 1px solid #E2D5C0;
+    padding: 0.6rem 1rem;
+    transition: all 0.2s;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--verde-claro);
+    box-shadow: 0 0 0 3px rgba(82,183,136,0.2);
+    outline: none;
+}
+
+.form-label {
+    font-weight: 500;
+    color: var(--tierra);
+    margin-bottom: 0.4rem;
+}
+
+/* ===== BADGES ===== */
+.badge-success {
+    background-color: var(--verde-musgo);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .card-nature {
+        padding: 1.2rem;
+    }
+    .welcome-card h1 {
+        font-size: 1.3rem;
+    }
+    .menu-card {
+        padding: 1rem;
+    }
+}
+
+/* ===== FOOTER (opcional) ===== */
+footer {
+    background: var(--verde-profundo);
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+}
+
+/* Botón de volver */
+.btn-outline-secondary {
+    background: transparent;
+    border: 1px solid #6c757d;
+    color: #6c757d;
+    border-radius: 30px;
+    padding: 8px 20px;
+    transition: all 0.3s;
+}
+
+.btn-outline-secondary:hover {
+    background: #6c757d;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Botón de inicio */
+.btn-verde {
+    background: linear-gradient(135deg, var(--verde-profundo), var(--verde-musgo));
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 8px 20px;
+    transition: all 0.3s;
+}
+
+.btn-verde:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(45,106,79,0.3);
+    color: white;
+}
