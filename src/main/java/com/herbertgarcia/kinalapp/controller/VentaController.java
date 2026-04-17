@@ -5,10 +5,11 @@ import com.herbertgarcia.kinalapp.service.VentaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/ventas")
+@RequestMapping("/api/ventas")  // ← AGREGAR /api/
 public class VentaController {
 
     private final VentaService ventaService;
