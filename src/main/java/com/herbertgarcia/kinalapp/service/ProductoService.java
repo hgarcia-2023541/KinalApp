@@ -25,7 +25,6 @@ public class ProductoService implements IProductoService {
 
     @Override
     public Producto guardar(Producto producto) {
-        validarProducto(producto);
         if (producto.getEstado() == null || producto.getEstado() == 0) {
             producto.setEstado(1L);
         }
@@ -44,7 +43,6 @@ public class ProductoService implements IProductoService {
             throw new RuntimeException("Producto no encontrado con id: " + id);
         }
         producto.setCodigoProducto(id);
-        validarProducto(producto);
         return productoRepository.save(producto);
     }
 
@@ -66,17 +64,5 @@ public class ProductoService implements IProductoService {
     @Transactional(readOnly = true)
     public List<Producto> listarActivos() {
         return productoRepository.findByEstado(1L);
-    }
-
-    private void validarProducto(Producto producto) {
-        if (producto.getNombreProducto() == null || producto.getNombreProducto().trim().isEmpty()) {
-            throw new IllegalArgumentException("El nombre del producto es obligatorio");
-        }
-        if (producto.getPrecio() == null) {
-            throw new IllegalArgumentException("El precio es obligatorio");
-        }
-        if (producto.getStock() == null) {
-            throw new IllegalArgumentException("El stock es obligatorio");
-        }
     }
 }
