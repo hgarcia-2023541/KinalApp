@@ -68,6 +68,11 @@ public class UsuarioService implements IUsuarioService {
         return usuarioRepository.findByEstado(1L);
     }
 
+    @Transactional(readOnly = true)
+    public Usuario buscarPorUsername(String username) {
+        return usuarioRepository.findByUsername(username);
+    }
+
     private void validarUsuario(Usuario usuario) {
         if (usuario.getUsername() == null || usuario.getUsername().trim().isEmpty()) {
             throw new IllegalArgumentException("El username es obligatorio");
