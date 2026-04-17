@@ -5,10 +5,11 @@ import com.herbertgarcia.kinalapp.service.ProductoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/productos")
+@RequestMapping("/api/productos")  // ← AGREGAR /api/
 public class ProductoController {
 
     private final ProductoService productoService;
