@@ -2,6 +2,9 @@ package com.herbertgarcia.kinalapp.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
+
 @Entity
 @Table(name = "Usuarios")
 public class Usuario {
@@ -25,6 +28,16 @@ public class Usuario {
 
     @Column(name = "estado")
     private Long estado;
+
+    @Column(name = "fecha_registro")
+    private LocalDate fechaRegistro;  // ← antes era LocalDateTime
+
+    @PrePersist
+    public void prePersist() {
+        if (this.fechaRegistro == null) {
+            this.fechaRegistro = LocalDate.now();  // ← antes era LocalDateTime.now()
+        }
+    }
 
     public Usuario() {}
 
@@ -54,4 +67,7 @@ public class Usuario {
 
     public Long getEstado() { return estado; }
     public void setEstado(Long estado) { this.estado = estado; }
+
+    public LocalDate getFechaRegistro() { return fechaRegistro; }
+    public void setFechaRegistro(LocalDate fechaRegistro) { this.fechaRegistro = fechaRegistro; }
 }
