@@ -65,8 +65,8 @@ mvn clean install
 ```bash
 mvn spring-boot:run
 ```
-
-O desde IntelliJ: clic en el botón ▶ Run sobre `KinalappApplication.java`.
+O desde IntelliJ: clic en el botón Run sobre `KinalappApplication.java`.
+La aplicación estará disponible en: `http://localhost:8083`
 
 ### 6. Acceder a la aplicación
 
