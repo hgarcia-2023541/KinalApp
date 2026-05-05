@@ -4,7 +4,6 @@ import com.herbertgarcia.kinalapp.entity.DetalleVenta;
 import com.herbertgarcia.kinalapp.service.DetalleVentaService;
 import com.herbertgarcia.kinalapp.service.ProductoService;
 import com.herbertgarcia.kinalapp.service.VentaService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,16 +24,14 @@ public class DetalleVentaViewController {
     }
 
     @GetMapping("/detalle-ventas")
-    public String listar(Model model, HttpSession session) {
-        if (session.getAttribute("usuario") == null) return "redirect:/login";
+    public String listar(Model model) {
         model.addAttribute("detalles", detalleVentaService.listarTodos());
         model.addAttribute("titulo", "Listado de Detalles de Venta");
         return "detalle-ventas/lista";
     }
 
     @GetMapping("/detalle-ventas/nuevo")
-    public String nuevo(Model model, HttpSession session) {
-        if (session.getAttribute("usuario") == null) return "redirect:/login";
+    public String nuevo(Model model) {
         model.addAttribute("detalle", new DetalleVenta());
         model.addAttribute("titulo", "Nuevo Detalle de Venta");
         model.addAttribute("productos", productoService.listarActivos());
@@ -43,8 +40,7 @@ public class DetalleVentaViewController {
     }
 
     @GetMapping("/detalle-ventas/editar/{id}")
-    public String editar(@PathVariable Long id, Model model, HttpSession session) {
-        if (session.getAttribute("usuario") == null) return "redirect:/login";
+    public String editar(@PathVariable Long id, Model model) {
         detalleVentaService.buscarPorId(id).ifPresent(detalle -> model.addAttribute("detalle", detalle));
         model.addAttribute("titulo", "Editar Detalle de Venta");
         model.addAttribute("productos", productoService.listarActivos());
@@ -52,17 +48,13 @@ public class DetalleVentaViewController {
         return "detalle-ventas/formulario";
     }
 
-    // ← CORREGIDO: recibe IDs por separado
     @PostMapping("/detalle-ventas/guardar")
     public String guardar(
             @RequestParam(required = false) Long codigoDetalleVenta,
             @RequestParam Long cantidad,
             @RequestParam BigDecimal precioUnitario,
             @RequestParam Long codigoVenta,
-            @RequestParam Long codigoProducto,
-            HttpSession session) {
-
-        if (session.getAttribute("usuario") == null) return "redirect:/login";
+            @RequestParam Long codigoProducto) {
 
         DetalleVenta detalle = new DetalleVenta();
         if (codigoDetalleVenta != null) detalle.setCodigoDetalleVenta(codigoDetalleVenta);
@@ -83,8 +75,7 @@ public class DetalleVentaViewController {
     }
 
     @GetMapping("/detalle-ventas/eliminar/{id}")
-    public String eliminar(@PathVariable Long id, HttpSession session) {
-        if (session.getAttribute("usuario") == null) return "redirect:/login";
+    public String eliminar(@PathVariable Long id) {
         detalleVentaService.eliminar(id);
         return "redirect:/detalle-ventas";
     }
