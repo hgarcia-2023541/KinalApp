@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${titulo}">Formulario Venta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<nav class="navbar-nature">
+    <div class="container">
+        <a class="navbar-brand" href="/dashboard">
+            <i class="fas fa-leaf"></i> KinalApp
+        </a>
+        <div class="d-flex gap-3 align-items-center">
+            <span class="text-white">
+                <i class="fas fa-user"></i>
+                <span th:text="${session.usuario != null ? session.usuario.username : 'Invitado'}"></span>
+            </span>
+            <a th:href="@{/logout}" class="btn-nature-outline">Salir</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <div class="d-flex gap-2 mb-4">
+        <a href="/dashboard" class="btn-verde">
+            <i class="fas fa-home"></i> Inicio
+        </a>
+        <a th:href="@{/ventas}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Volver a lista
+        </a>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card-nature">
+                <h3 class="mb-4" th:text="${titulo}"></h3>
+
+                <!-- SIN th:object, campos con name simples -->
+                <form th:action="@{/ventas/guardar}" method="post">
+
+                    <!-- ID oculto para edición -->
+                    <input type="hidden" name="codigoVenta"
+                           th:value="${venta.codigoVenta}">
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Fecha de Venta *</label>
+                            <input type="date" name="fechaVenta"
+                                   th:value="${venta.fechaVenta}"
+                                   class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Estado</label>
+                            <select name="estado" class="form-select">
+                                <option value="1" th:selected="${venta.estado == 1}">Activo</option>
+                                <option value="0" th:selected="${venta.estado == 0}">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Cliente *</label>
+                            <select name="dpiCliente" class="form-select" required>
+                                <option value="">Seleccionar cliente...</option>
+                                <option th:each="c : ${clientes}"
+                                        th:value="${c.DPICliente}"
+                                        th:text="${c.nombreCliente + ' ' + c.apellidoCliente}"
+                                        th:selected="${venta.cliente != null and venta.cliente.DPICliente == c.DPICliente}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Usuario *</label>
+                            <select name="codigoUsuario" class="form-select" required>
+                                <option value="">Seleccionar usuario...</option>
+                                <option th:each="u : ${usuarios}"
+                                        th:value="${u.codigoUsuario}"
+                                        th:text="${u.username}"
+                                        th:selected="${venta.usuario != null and venta.usuario.codigoUsuario == u.codigoUsuario}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-3 mt-3 justify-content-end">
+                        <a th:href="@{/ventas}" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn-verde">
+                            <i class="fas fa-save"></i> Guardar Venta
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>
