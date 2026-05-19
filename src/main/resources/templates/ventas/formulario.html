@@ -17,9 +17,10 @@
         <div class="d-flex gap-3 align-items-center">
             <span class="text-white">
                 <i class="fas fa-user"></i>
-                <span th:text="${session.usuario != null ? session.usuario.username : 'Invitado'}"></span>
-            </span>
-            <a th:href="@{/logout}" class="btn-nature-outline">Salir</a>
+                <span th:text="${#authentication.name}"></span>
+<form th:action="@{/logout}" method="post" style="display:inline;">
+    <button type="submit" class="btn-nature-outline">Salir</button>
+</form>
         </div>
     </div>
 </nav>
@@ -38,11 +39,7 @@
         <div class="col-md-8">
             <div class="card-nature">
                 <h3 class="mb-4" th:text="${titulo}"></h3>
-
-                <!-- SIN th:object, campos con name simples -->
                 <form th:action="@{/ventas/guardar}" method="post">
-
-                    <!-- ID oculto para edición -->
                     <input type="hidden" name="codigoVenta"
                            th:value="${venta.codigoVenta}">
 
