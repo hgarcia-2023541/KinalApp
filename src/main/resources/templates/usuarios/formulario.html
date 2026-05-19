@@ -16,9 +16,12 @@
         </a>
         <div class="d-flex gap-3 align-items-center">
             <span class="text-white">
-                <i class="fas fa-user"></i> <span th:text="${session.usuario != null ? session.usuario.username : 'Invitado'}"></span>
+                <i class="fas fa-user"></i>
+                <span th:text="${#authentication.name}"></span>
             </span>
-            <a th:href="@{/logout}" class="btn-nature-outline">Salir</a>
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <button type="submit" class="btn-nature-outline">Salir</button>
+            </form>
         </div>
     </div>
 </nav>
@@ -29,26 +32,33 @@
             <div class="card-nature">
                 <h3 class="mb-4" th:text="${titulo}"></h3>
 
+                <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
                 <form th:action="@{/usuarios/guardar}" th:object="${usuario}" method="post">
+                    <input type="hidden" th:field="*{codigoUsuario}"/>
                     <div class="mb-3">
                         <label class="form-label">Nombre de usuario</label>
-                        <input type="text" th:field="*{username}" class="form-control" required>
+                        <input type="text" th:field="*{username}"
+                               th:classappend="${#fields.hasErrors('username')} ? 'is-invalid' : ''"
+                               class="form-control">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}"
+                             th:errors="*{username}"></div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Email</label>
-                        <input type="email" th:field="*{email}" class="form-control" required>
+                        <input type="email" th:field="*{email}"
+                               th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
+                               class="form-control">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}"
+                             th:errors="*{email}"></div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Contraseña</label>
-                        <input type="password" th:field="*{password}" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Rol</label>
-                        <select th:field="*{rol}" class="form-select" required>
-                            <option value="">Seleccionar...</option>
-                            <option value="ADMIN">Administrador</option>
-                            <option value="VENDEDOR">Vendedor</option>
-                        </select>
+                        <input type="password" th:field="*{password}" class="form-control"
+                               th:required="${usuario.codigoUsuario == null}">
+                        <small class="text-muted" th:if="${usuario.codigoUsuario != null}">
+                            Dejar vacío para mantener la contraseña actual
+                        </small>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Estado</label>
