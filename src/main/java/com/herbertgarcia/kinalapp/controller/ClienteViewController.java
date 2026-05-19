@@ -5,6 +5,9 @@ import com.herbertgarcia.kinalapp.service.ClienteService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
+
 
 @Controller
 public class ClienteViewController {
@@ -37,7 +40,11 @@ public class ClienteViewController {
     }
 
     @PostMapping("/clientes/guardar")
-    public String guardar(@ModelAttribute Cliente cliente) {
+    public String guardar(@Valid @ModelAttribute Cliente cliente, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("titulo", cliente.getDPICliente() != null ? "Editar Cliente" : "Nuevo Cliente");
+            return "clientes/formulario";
+        }
         clienteService.guardar(cliente);
         return "redirect:/clientes";
     }
