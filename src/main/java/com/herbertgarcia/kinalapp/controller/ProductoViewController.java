@@ -5,6 +5,8 @@ import com.herbertgarcia.kinalapp.service.ProductoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
 
 @Controller
 public class ProductoViewController {
@@ -37,7 +39,11 @@ public class ProductoViewController {
     }
 
     @PostMapping("/productos/guardar")
-    public String guardar(@ModelAttribute Producto producto) {
+    public String guardar(@Valid @ModelAttribute Producto producto, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("titulo", producto.getCodigoProducto() != null ? "Editar Producto" : "Nuevo Producto");
+            return "productos/formulario";
+        }
         productoService.guardar(producto);
         return "redirect:/productos";
     }
