@@ -76,38 +76,56 @@ http://localhost:8083
 
 Serás redirigido automáticamente al formulario de login.
 
-## Seguridad y Control de Acceso
+Seguridad y Control de Acceso
+La aplicación utiliza autenticación desde base de datos con contraseñas encriptadas mediante BCrypt.
 
-### Credenciales de prueba
+Credenciales de prueba
+|Usuario|	Contraseña|	Rol|
+|admin|	admin|	ADMIN|
+|user|	12345|	USER|
+Los usuarios deben crearse desde la interfaz de usuario o directamente en la base de datos. Las contraseñas se encriptan automáticamente.
 
-| Usuario | Contraseña | Rol   |
-|---------|------------|-------|
-| admin   | admin      | ADMIN |
-| user    | 12345      | USER  |
+Rutas públicas (sin autenticación)
+Ruta	Descripción
+| /login	|Formulario de inicio de sesión
+|/css/**	|Archivos de estilos
+|/js/**	|Archivos JavaScript
+Rutas protegidas por rol
+Ruta	Rol requerido	Descripción
+|/dashboard|	USER, ADMIN	Panel principal
+|/clientes/**|	ADMIN	Gestión de clientes
+|/productos/**|	ADMIN	Gestión de productos
+|/usuarios/**|	ADMIN	Gestión de usuarios
+|/ventas/**|	ADMIN	Gestión de ventas
+|/detalle-ventas/**|	ADMIN	Gestión de detalles
+Comportamiento por rol
+ADMIN: Ve todos los paneles en el dashboard y puede acceder y gestionar todas las entidades.
 
-### Rutas públicas (sin autenticación)
+USER: Accede al dashboard pero no ve los paneles de gestión. Si intenta acceder directamente a una ruta protegida, recibe una página de error 403.
 
-| Ruta | Descripción |
-|------|-------------|
-| `/login` | Formulario de inicio de sesión |
-| `/css/**` | Archivos de estilos |
-| `/js/**` | Archivos JavaScript |
+Validaciones Implementadas
+Las entidades incluyen validaciones con mensajes de error visibles en los formularios:
 
-### Rutas protegidas por rol
+Entidad Usuario
+Username y email obligatorios con @NotBlank
 
-| Ruta | Rol requerido | Descripción |
-|------|--------------|-------------|
-| `/dashboard` | USER, ADMIN | Panel principal |
-| `/clientes/**` | ADMIN | Gestión de clientes |
-| `/productos/**` | ADMIN | Gestión de productos |
-| `/usuarios/**` | ADMIN | Gestión de usuarios |
-| `/ventas/**` | ADMIN | Gestión de ventas |
-| `/detalle-ventas/**` | ADMIN | Gestión de detalles |
+Email con formato válido mediante @Email
 
-### Comportamiento por rol
+Password obligatorio en base de datos (nullable=false)
 
-- **ADMIN**: Ve todos los paneles en el dashboard y puede acceder y gestionar todas las entidades.
-- **USER**: Accede al dashboard pero no ve los paneles de gestión. Si intenta acceder directamente a una ruta protegida, recibe una página de error 403.
+Contraseña encriptada automáticamente al guardar
+
+Entidad Cliente
+DPI obligatorio con exactamente 13 dígitos (@Size)
+
+Nombre y apellido obligatorios (@NotBlank)
+
+Entidad Producto
+Nombre del producto obligatorio (@NotBlank)
+
+Precio obligatorio y mayor a 0 (@NotNull, @DecimalMin)
+
+Stock obligatorio y no negativo (@NotNull, @Min)
 
 ## Capturas de Pantalla
 
@@ -170,31 +188,44 @@ La colección de Postman está disponible en la carpeta `postman/` del repositor
 ## Estructura del Proyecto
 src/
 └── main/
-├── java/com/herbertgarcia/kinalapp/
-│   ├── config/
-│   │   └── SecurityConfig.java
-│   ├── controller/
-│   │   ├── AuthController.java
-│   │   ├── ClienteController.java
-│   │   ├── ClienteViewController.java
-│   │   └── ...
-│   ├── entity/
-│   ├── repository/
-│   └── service/
-└── resources/
-├── templates/
-│   ├── login.html
-│   ├── dashboard.html
-│   ├── 403.html
-│   ├── clientes/
-│   ├── productos/
-│   ├── usuarios/
-│   ├── ventas/
-│   └── detalle-ventas/
-├── static/
-│   ├── css/
-│   └── js/
-└── application.properties
+    ├── java/com/herbertgarcia/kinalapp/
+    │   ├── config/
+    │   │   ├── SecurityConfig.java
+    │   │   ├── CustomUserDetails.java
+    │   │   └── CustomUserDetailsService.java
+    │   ├── controller/
+    │   │   ├── AuthController.java
+    │   │   ├── ClienteController.java
+    │   │   ├── ClienteViewController.java
+    │   │   ├── ProductoController.java
+    │   │   ├── ProductoViewController.java
+    │   │   ├── UsuarioController.java
+    │   │   ├── UsuarioViewController.java
+    │   │   ├── VentaController.java
+    │   │   └── DetalleVentaController.java
+    │   ├── entity/
+    │   │   ├── Cliente.java
+    │   │   ├── Producto.java
+    │   │   ├── Usuario.java
+    │   │   ├── Venta.java
+    │   │   └── DetalleVenta.java
+    │   ├── repository/
+    │   ├── service/
+    │   └── KinalappApplication.java
+    └── resources/
+        ├── templates/
+        │   ├── login.html
+        │   ├── dashboard.html
+        │   ├── 403.html
+        │   ├── clientes/
+        │   ├── productos/
+        │   ├── usuarios/
+        │   ├── ventas/
+        │   └── detalle-ventas/
+        ├── static/
+        │   ├── css/
+        │   └── js/
+        └── application.properties
 
 ## Autor
 
