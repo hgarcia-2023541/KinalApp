@@ -1,6 +1,10 @@
 package com.herbertgarcia.kinalapp.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity
@@ -13,12 +17,17 @@ public class Producto {
     private Long codigoProducto;
 
     @Column(name = "nombre_producto", length = 60)
+    @NotBlank(message = "El nombre del producto es obligatorio")
     private String nombreProducto;
 
     @Column(name = "precio", precision = 10, scale = 2)
+    @NotNull(message = "El precio es obligatorio")
+    @DecimalMin(value = "0.01", message = "El precio debe ser mayor a 0")
     private BigDecimal precio;
 
     @Column(name = "stock")
+    @NotNull(message = "El stock es obligatorio")
+    @Min(value = 0, message = "El stock no puede ser negativo")
     private Long stock;
 
     @Column(name = "estado")
@@ -36,16 +45,12 @@ public class Producto {
 
     public Long getCodigoProducto() { return codigoProducto; }
     public void setCodigoProducto(Long codigoProducto) { this.codigoProducto = codigoProducto; }
-
     public String getNombreProducto() { return nombreProducto; }
     public void setNombreProducto(String nombreProducto) { this.nombreProducto = nombreProducto; }
-
     public BigDecimal getPrecio() { return precio; }
     public void setPrecio(BigDecimal precio) { this.precio = precio; }
-
     public Long getStock() { return stock; }
     public void setStock(Long stock) { this.stock = stock; }
-
     public Long getEstado() { return estado; }
     public void setEstado(Long estado) { this.estado = estado; }
 }
