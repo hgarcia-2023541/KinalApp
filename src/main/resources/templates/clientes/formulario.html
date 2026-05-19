@@ -15,16 +15,15 @@
             <i class="fas fa-leaf"></i> KinalApp
         </a>
         <div class="d-flex gap-3 align-items-center">
-            <span class="text-white">
-                <i class="fas fa-user"></i> <span th:text="${session.usuario != null ? session.usuario.username : 'Invitado'}"></span>
-            </span>
-            <a th:href="@{/logout}" class="btn-nature-outline">Salir</a>
+            <span th:text="${#authentication.name}"></span>
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <button type="submit" class="btn-nature-outline">Salir</button>
+            </form>
         </div>
     </div>
 </nav>
 
 <div class="container mt-4">
-    <!-- Botones de navegación -->
     <div class="d-flex gap-2 mb-4">
         <a href="/" class="btn btn-verde">
             <i class="fas fa-home"></i> Inicio
@@ -42,15 +41,27 @@
                 <form th:action="@{/clientes/guardar}" th:object="${cliente}" method="post">
                     <div class="mb-3">
                         <label class="form-label">DPI</label>
-                        <input type="text" th:field="*{DPICliente}" class="form-control" required>
+                        <input type="text" th:field="*{DPICliente}"
+                               th:classappend="${#fields.hasErrors('DPICliente')} ? 'is-invalid' : ''"
+                               class="form-control">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('DPICliente')}"
+                             th:errors="*{DPICliente}"></div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <input type="text" th:field="*{nombreCliente}" class="form-control" required>
+                        <input type="text" th:field="*{nombreCliente}"
+                               th:classappend="${#fields.hasErrors('nombreCliente')} ? 'is-invalid' : ''"
+                               class="form-control">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('nombreCliente')}"
+                             th:errors="*{nombreCliente}"></div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Apellido</label>
-                        <input type="text" th:field="*{apellidoCliente}" class="form-control" required>
+                        <input type="text" th:field="*{apellidoCliente}"
+                               th:classappend="${#fields.hasErrors('apellidoCliente')} ? 'is-invalid' : ''"
+                               class="form-control">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('apellidoCliente')}"
+                             th:errors="*{apellidoCliente}"></div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Dirección</label>

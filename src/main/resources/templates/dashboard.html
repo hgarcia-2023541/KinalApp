@@ -39,7 +39,7 @@
 
     <div class="row mt-4 g-4">
 
-        <div class="col-md-4" sec:authorize="hasRole('ADMIN')">
+        <div class="col-md-4">
             <div class="menu-card" onclick="location.href='/clientes'">
                 <i class="fas fa-users fa-3x"></i>
                 <h4>Clientes</h4>
@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <div class="col-md-4" sec:authorize="hasRole('ADMIN')">
+        <div class="col-md-4">
             <div class="menu-card" onclick="location.href='/productos'">
                 <i class="fas fa-box fa-3x"></i>
                 <h4>Productos</h4>
@@ -63,7 +63,7 @@
             </div>
         </div>
 
-        <div class="col-md-6" sec:authorize="hasRole('ADMIN')">
+        <div class="col-md-6">
             <div class="menu-card" onclick="location.href='/ventas'">
                 <i class="fas fa-shopping-cart fa-3x"></i>
                 <h4>Ventas</h4>
@@ -71,7 +71,7 @@
             </div>
         </div>
 
-        <div class="col-md-6" sec:authorize="hasRole('ADMIN')">
+        <div class="col-md-6">
             <div class="menu-card" onclick="location.href='/detalle-ventas'">
                 <i class="fas fa-receipt fa-3x"></i>
                 <h4>Detalle de Ventas</h4>
@@ -79,11 +79,10 @@
             </div>
         </div>
 
-        <!-- Panel visible solo para USER -->
         <div class="col-12" sec:authorize="hasRole('USER')">
             <div class="alert alert-info text-center mt-3">
                 <i class="fas fa-info-circle me-2"></i>
-                Tu cuenta tiene acceso limitado. Contacta al administrador para más permisos.
+                No tienes acceso a la gestión de usuarios. Contacta al administrador.
             </div>
         </div>
 

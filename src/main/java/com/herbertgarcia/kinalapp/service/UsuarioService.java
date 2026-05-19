@@ -2,8 +2,10 @@ package com.herbertgarcia.kinalapp.service;
 
 import com.herbertgarcia.kinalapp.entity.Usuario;
 import com.herbertgarcia.kinalapp.repository.UsuarioRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -12,9 +14,11 @@ import java.util.Optional;
 public class UsuarioService implements IUsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -26,9 +30,9 @@ public class UsuarioService implements IUsuarioService {
     @Override
     public Usuario guardar(Usuario usuario) {
         validarUsuario(usuario);
-        if (usuario.getEstado() == null || usuario.getEstado() == 0) {
-            usuario.setEstado(1L);
-        }
+        usuario.setRol("USER");
+        usuario.setEstado(1L);
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         return usuarioRepository.save(usuario);
     }
 
@@ -40,12 +44,17 @@ public class UsuarioService implements IUsuarioService {
 
     @Override
     public Usuario actualizar(Long id, Usuario usuario) {
-        if (!usuarioRepository.existsById(id)) {
-            throw new RuntimeException("Usuario no encontrado con id: " + id);
+        Usuario existente = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con id: " + id));
+        existente.setUsername(usuario.getUsername());
+        existente.setEmail(usuario.getEmail());
+        existente.setEstado(usuario.getEstado());
+        // Solo re-encripta si cambiaron el password
+        if (usuario.getPassword() != null && !usuario.getPassword().isEmpty()) {
+            existente.setPassword(passwordEncoder.encode(usuario.getPassword()));
         }
-        usuario.setCodigoUsuario(id);
-        validarUsuario(usuario);
-        return usuarioRepository.save(usuario);
+        // El rol NO se toca — solo se cambia desde BD
+        return usuarioRepository.save(existente);
     }
 
     @Override
@@ -80,8 +89,8 @@ public class UsuarioService implements IUsuarioService {
         if (usuario.getEmail() == null || usuario.getEmail().trim().isEmpty()) {
             throw new IllegalArgumentException("El email es obligatorio");
         }
-        if (usuario.getRol() == null || usuario.getRol().trim().isEmpty()) {
-            throw new IllegalArgumentException("El rol es obligatorio");
+        if (usuario.getPassword() == null || usuario.getPassword().trim().isEmpty()) {
+            throw new IllegalArgumentException("La contraseña es obligatoria");
         }
     }
 }
