@@ -5,6 +5,8 @@ import com.herbertgarcia.kinalapp.service.UsuarioService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
 
 @Controller
 public class UsuarioViewController {
@@ -37,7 +39,11 @@ public class UsuarioViewController {
     }
 
     @PostMapping("/usuarios/guardar")
-    public String guardar(@ModelAttribute Usuario usuario) {
+    public String guardar(@Valid @ModelAttribute Usuario usuario, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("titulo", usuario.getCodigoUsuario() != null ? "Editar Usuario" : "Nuevo Usuario");
+            return "usuarios/formulario";
+        }
         usuarioService.guardar(usuario);
         return "redirect:/usuarios";
     }
