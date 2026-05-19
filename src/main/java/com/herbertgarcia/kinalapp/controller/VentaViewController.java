@@ -1,12 +1,9 @@
 package com.herbertgarcia.kinalapp.controller;
 
-import com.herbertgarcia.kinalapp.entity.Cliente;
-import com.herbertgarcia.kinalapp.entity.Usuario;
 import com.herbertgarcia.kinalapp.entity.Venta;
 import com.herbertgarcia.kinalapp.service.ClienteService;
 import com.herbertgarcia.kinalapp.service.UsuarioService;
 import com.herbertgarcia.kinalapp.service.VentaService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,16 +26,14 @@ public class VentaViewController {
     }
 
     @GetMapping("/ventas")
-    public String listar(Model model, HttpSession session) {
-        if (session.getAttribute("usuario") == null) return "redirect:/login";
+    public String listar(Model model) {
         model.addAttribute("ventas", ventaService.listarTodos());
         model.addAttribute("titulo", "Listado de Ventas");
         return "ventas/lista";
     }
 
     @GetMapping("/ventas/nuevo")
-    public String nuevo(Model model, HttpSession session) {
-        if (session.getAttribute("usuario") == null) return "redirect:/login";
+    public String nuevo(Model model) {
         model.addAttribute("venta", new Venta());
         model.addAttribute("titulo", "Nueva Venta");
         model.addAttribute("clientes", clienteService.listarActivos());
@@ -47,8 +42,7 @@ public class VentaViewController {
     }
 
     @GetMapping("/ventas/editar/{id}")
-    public String editar(@PathVariable Long id, Model model, HttpSession session) {
-        if (session.getAttribute("usuario") == null) return "redirect:/login";
+    public String editar(@PathVariable Long id, Model model) {
         ventaService.buscarPorId(id).ifPresent(venta -> model.addAttribute("venta", venta));
         model.addAttribute("titulo", "Editar Venta");
         model.addAttribute("clientes", clienteService.listarActivos());
@@ -56,17 +50,13 @@ public class VentaViewController {
         return "ventas/formulario";
     }
 
-    // ← CORREGIDO: recibe IDs por separado en vez de @ModelAttribute con relaciones
     @PostMapping("/ventas/guardar")
     public String guardar(
             @RequestParam(required = false) Long codigoVenta,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaVenta,
             @RequestParam String dpiCliente,
             @RequestParam Long codigoUsuario,
-            @RequestParam(required = false) Long estado,
-            HttpSession session) {
-
-        if (session.getAttribute("usuario") == null) return "redirect:/login";
+            @RequestParam(required = false) Long estado) {
 
         Venta venta = new Venta();
         if (codigoVenta != null) venta.setCodigoVenta(codigoVenta);
@@ -88,8 +78,7 @@ public class VentaViewController {
     }
 
     @GetMapping("/ventas/eliminar/{id}")
-    public String eliminar(@PathVariable Long id, HttpSession session) {
-        if (session.getAttribute("usuario") == null) return "redirect:/login";
+    public String eliminar(@PathVariable Long id) {
         ventaService.eliminar(id);
         return "redirect:/ventas";
     }
